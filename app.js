@@ -1,13 +1,16 @@
 import express from 'express'
 import dbConnection from './src/config/dbConnection.js'
 import userRouter from './src/routes/user.routes.js'
+import notesRouter from './src/routes/note.routes.js'
+import dotenv from 'dotenv'
 const app = express()
+dotenv.config()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
-app.use('/api/auth' , userRouter)
-app.use('/api/auth' , userRouter)
 
+app.use('/api/auth' , userRouter)
+app.use('/api/notes' , notesRouter)
 
 
 
