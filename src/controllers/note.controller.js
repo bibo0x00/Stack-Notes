@@ -54,7 +54,7 @@ const getAllNotes = async (req, res) => {
 
 const getNote = async (req , res)=>{
      try{
-    const note = await Note.findById(req.params.id)
+    const note = await Note.find({ id: req.user._id })
     res.status(200).json({
         success : true , 
         message : "Note found" , 

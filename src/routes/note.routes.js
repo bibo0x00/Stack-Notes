@@ -1,13 +1,14 @@
 import express from 'express'
 import { createNote, getAllNotes  ,getNote , deleteNote , updateNote} from '../controllers/note.controller.js'
+import verifyToken from '../middlewares/verifyToken.js'
 const notesRouter = express.Router()
 
 
-notesRouter.post('/createNote',createNote)
-notesRouter.get('/getNote',getNote)
-notesRouter.delete('/deleteNote/:id',deleteNote)
-notesRouter.put('/updateNote/:id',updateNote)
-notesRouter.get('/getAllNotes',getAllNotes)
+notesRouter.post('/createNote', verifyToken, createNote)
+notesRouter.get('/getNote',verifyToken ,getNote)
+notesRouter.delete('/deleteNote/:id',verifyToken,deleteNote)
+notesRouter.put('/updateNote/:id',verifyToken,updateNote)
+notesRouter.get('/getAllNotes',verifyToken,getAllNotes)
 
 
 
