@@ -33,7 +33,7 @@ const logIn = async (req , res)=>{
             return res.status(401).json({success : false , message : "Invalid email or password"})}
         user.password = undefined
         let payload = {
-            id : user._id , 
+            userId : user._id , 
             email : user.email , 
             role : user.role
         }

@@ -36,7 +36,7 @@ const createNote = async (req, res) => {
 
 const getAllNotes = async (req, res) => {
     try{
-        const notes = Note.find()
+        let notes =await Note.find()
         res.status(200).json({
             success : true  , 
             message : "It`s all notes" , 
@@ -54,7 +54,7 @@ const getAllNotes = async (req, res) => {
 
 const getNote = async (req , res)=>{
      try{
-    const note = await Note.find({ id: req.user._id })
+    const note = await Note.find({ userId: req.user.id })
     res.status(200).json({
         success : true , 
         message : "Note found" , 
