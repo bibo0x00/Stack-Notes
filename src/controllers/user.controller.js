@@ -1,17 +1,20 @@
 import User from "../models/user.model.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { sendEmail } from "../services/email.service.js";
 
 
 const register = async (req  , res) =>{
     try{
         let user = await User.insertMany(req.body)
+        sendEmail(req.body.email)
         user[0].password = undefined
         res.status(201).json({
             success : true , 
             message : "User created successfully" , 
             data : user
-        })
+        })  
+      
 
     }catch(err){
 
@@ -52,8 +55,25 @@ const logIn = async (req , res)=>{
 }
 
 
+const verifyEmail = async (req , res)=>{
+jwt.verify(req.params.token , process.env.JWT_SECRET , async (err , decoded)=>{
+    if(err) return res.status(401).json({success : false , message : "Invalid token"})
+    let user = await User.findOneAndUpdate({email : decoded.email} , {confirmEmail : true} )
+    res.status(200).json({success : true , message : "Email verified successfully" })
+})
+
+
+
+
+
+
+
+}
+
+
 export {
      register  , 
-        logIn
+        logIn , 
+  verifyEmail 
 
 }
